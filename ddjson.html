@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Drag & Drop + JSON</title>
+		<style>
+			#dropzone {
+				height: 100px;
+				width: 300px;
+				border: 2px dashed black;
+			}
+			#dropbox {
+				width: 50px;
+				height: 50px;
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div draggable="true" id="dropbox"></div>
+		<div id="dropzone"></div>
+		<div id="pstatus"></div>
+		
+		<script>
+			
+			var zone = document.getElementById("dropzone");
+			var box = document.getElementById("dropbox");
+			var status = document.getElementById("status");
+			
+			function dragStart(e) {
+				var message = "Hey! Listen! You've discover the secret message.";
+				var jsonmessage = JSON.stringify(message);
+				e.dataTransfer.setData("text", jsonmessage);
+				
+			}
+			
+			function dropHandler(e) {
+				e.preventDefault();
+				pstatus.innerHTML = "";	
+			}
+			
+			function dragOver(e) {
+				e.preventDefault();
+				pstatus.innerHTML = "";
+				var message = e.dataTransfer.getData("text");
+				var jsonmessage = JSON.parse(message);
+				pstatus.innerHTML = jsonmessage;
+			}
+			
+			box.addEventListener("dragstart", dragStart);
+			zone.addEventListener("drop", dropHandler);
+			zone.addEventListener("dragover", dragOver);
+			
+		</script>
+	</body>
+</html>
